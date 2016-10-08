@@ -2,58 +2,70 @@
  * @providesModule react-native-device-info
  */
 
-var RNDeviceInfo = require('react-native').NativeModules.RNDeviceInfo;
+import { NativeModules, Platform } from 'react-native';
+const { RNDeviceInfo } = NativeModules;
 
-module.exports = {
-  getUniqueID: function () {
+export default {
+  getUniqueID() {
     return RNDeviceInfo.uniqueId;
   },
-  getInstanceID: function() {
+  getInstanceID() {
     return RNDeviceInfo.instanceId;
   },
-  getDeviceId: function () {
+  getDeviceId() {
     return RNDeviceInfo.deviceId;
   },
-  getManufacturer: function () {
+  getManufacturer() {
     return RNDeviceInfo.systemManufacturer;
   },
-  getModel: function () {
+  getModel() {
     return RNDeviceInfo.model;
   },
-  getBrand: function () {
+  getBrand() {
     return RNDeviceInfo.brand;
   },
-  getSystemName: function () {
+  getSystemName() {
     return RNDeviceInfo.systemName;
   },
-  getSystemVersion: function () {
+  getSystemVersion() {
     return RNDeviceInfo.systemVersion;
   },
-  getBundleId: function() {
+  getBundleId() {
     return RNDeviceInfo.bundleId;
   },
-  getBuildNumber: function() {
+  getBuildNumber() {
     return RNDeviceInfo.buildNumber;
   },
-  getVersion: function() {
+  getVersion() {
     return RNDeviceInfo.appVersion;
   },
-  getReadableVersion: function() {
+  getReadableVersion() {
     return RNDeviceInfo.appVersion + "." + RNDeviceInfo.buildNumber;
   },
-  getDeviceName: function() {
+  getDeviceName() {
     return RNDeviceInfo.deviceName;
   },
-  getUserAgent: function() {
+  getUserAgent() {
     return RNDeviceInfo.userAgent;
   },
-  getDeviceLocale: function() {
+  getDeviceLocale() {
     return RNDeviceInfo.deviceLocale;
   },
-  getDeviceCountry: function() {
+  getDeviceCountry() {
     return RNDeviceInfo.deviceCountry;
   },
-  getTimezone: function() {
+  getTimezone() {
     return RNDeviceInfo.timezone;
   },
-};
+  getMacAddress() {
+    return RNDeviceInfo.macAddress;
+  },
+  getIdfa() {
+    if (Platform === 'android') return '';
+    return RNDeviceInfo.idfa;
+  },
+  getImei() {
+    if (Platform === 'ios') return '';
+    return RNDeviceInfo.imei;
+  },
+}

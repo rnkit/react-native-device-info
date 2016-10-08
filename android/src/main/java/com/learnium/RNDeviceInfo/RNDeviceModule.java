@@ -6,11 +6,17 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings.Secure;
 
+import android.telephony.TelephonyManager;
+import android.util.Log;
+
 import com.google.android.gms.iid.InstanceID;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.lang.Exception;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -52,6 +58,32 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     return current.getCountry();
   }
 
+  private String getLocalMacAddress() {
+    String mac= "";
+    try {
+      Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+      while (interfaces.hasMoreElements()) {
+        NetworkInterface iF = interfaces.nextElement();
+        byte[] addr = iF.getHardwareAddress();
+        if (addr == null || addr.length == 0) {
+          continue;
+        }
+        StringBuilder buf = new StringBuilder();
+        for (byte b : addr) {
+          buf.append(String.format("%02X:", b));
+        }
+        if (buf.length() > 0) {
+          buf.deleteCharAt(buf.length() - 1);
+        }
+        mac = buf.toString();
+        Log.d("mac", "interfaceName="+iF.getName()+", mac="+mac);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return mac;
+  }
+
   @Override
   public @Nullable Map<String, Object> getConstants() {
     HashMap<String, Object> constants = new HashMap<String, Object>();
@@ -80,6 +112,14 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
       e.printStackTrace();
     }
 
+    String IMEI = "";
+    try {
+      TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+      IMEI = tm.getDeviceId();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
     constants.put("instanceId", InstanceID.getInstance(this.reactContext).getId());
     constants.put("deviceName", deviceName);
     constants.put("systemName", "Android");
@@ -94,6 +134,9 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     constants.put("bundleId", packageName);
     constants.put("userAgent", System.getProperty("http.agent"));
     constants.put("timezone", TimeZone.getDefault().getID());
+    constants.put("macAddress", this.getLocalMacAddress());
+    constants.put("imei", IMEI);
+
     return constants;
   }
 }
