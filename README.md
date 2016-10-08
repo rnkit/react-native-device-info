@@ -170,4 +170,10 @@ console.log("Device Country", DeviceInfo.getDeviceCountry()); // e.g US
 console.log("Timezone", DeviceInfo.getTimezone()); // e.g America/Mexico_City
 
 console.log("App Instance ID", DeviceInfo.getInstanceID()); // ANDROID ONLY - see https://developers.google.com/instance-id/
+
+console.log("MacAddress", DeviceInfo.getMacAddress()); // e.g 34:4D:F7:95:49:20
+
+console.log("Idfa", DeviceInfo.getIdfa()); // iOS ONLY
+
+console.log("Imei", DeviceInfo.getImei()); // ANDROID ONLY
 ```
