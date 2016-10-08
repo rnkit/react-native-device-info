@@ -114,7 +114,7 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
 
     String IMEI = "";
     try {
-      TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+      TelephonyManager tm = (TelephonyManager) getReactApplicationContext().getSystemService(getReactApplicationContext().TELEPHONY_SERVICE);
       IMEI = tm.getDeviceId();
     } catch (Exception e) {
       e.printStackTrace();
