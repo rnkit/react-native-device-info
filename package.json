@@ -1,6 +1,6 @@
 {
   "name": "react-native-device-info-fork",
-  "version": "0.9.6",
+  "version": "1.0.0",
   "description": "Get device information using react-native",
   "main": "deviceinfo.js",
   "repository": {
@@ -16,6 +16,9 @@
     "events",
     "cocoapod"
   ],
+  "peerDependencies": {
+    "react-native": ">=0.46"
+  },
   "author": "Rebecca Hughes <rebecca@learnium.net> (https://github.com/rebeccahughes)",
   "license": "MIT"
 }

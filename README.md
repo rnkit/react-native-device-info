@@ -10,6 +10,12 @@ Device Information for [React Native](https://github.com/facebook/react-native)
 npm install --save react-native-device-info
 ```
 
+### < 0.46
+
+```shell
+npm install --save react-native-device-info-fork@0.9.6
+```
+
 ## Automatically link
 
 #### With React Native 0.27+
